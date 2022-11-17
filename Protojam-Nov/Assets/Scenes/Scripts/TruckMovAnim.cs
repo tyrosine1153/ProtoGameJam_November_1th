@@ -23,7 +23,6 @@ public class TruckMovAnim : MonoBehaviour
     {
         if (drive == false) { transform.position = Bpoint; drive = true; }
         else { transform.position = Apoint; drive = false; }
-        Debug.Log(transform.position);
             yield return new WaitForSeconds(DelayTime);
         StartCoroutine("Ride", DelayTime);
     }
