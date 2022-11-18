@@ -107,10 +107,10 @@ TextureImporter:
       name: forpro_gamjam_re_0
       rect:
         serializedVersion: 2
-        x: 76
-        y: 2239
-        width: 1345
-        height: 119
+        x: 166
+        y: 2402
+        width: 1250
+        height: 74
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,10 +128,10 @@ TextureImporter:
       name: forpro_gamjam_re_1
       rect:
         serializedVersion: 2
-        x: 161
-        y: 2350
-        width: 1250
-        height: 74
+        x: 1512
+        y: 2355
+        width: 99
+        height: 90
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -149,10 +149,10 @@ TextureImporter:
       name: forpro_gamjam_re_2
       rect:
         serializedVersion: 2
-        x: 1512
-        y: 2355
-        width: 99
-        height: 90
+        x: 76
+        y: 2239
+        width: 1345
+        height: 119
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -170,10 +170,10 @@ TextureImporter:
       name: forpro_gamjam_re_3
       rect:
         serializedVersion: 2
-        x: 85
-        y: 1968
-        width: 448
-        height: 206
+        x: 1512
+        y: 2163
+        width: 237
+        height: 152
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -191,10 +191,10 @@ TextureImporter:
       name: forpro_gamjam_re_4
       rect:
         serializedVersion: 2
-        x: 1015
-        y: 1989
-        width: 449
-        height: 191
+        x: 1774
+        y: 2172
+        width: 232
+        height: 144
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -212,10 +212,10 @@ TextureImporter:
       name: forpro_gamjam_re_5
       rect:
         serializedVersion: 2
-        x: 1512
-        y: 2163
-        width: 237
-        height: 152
+        x: 85
+        y: 1968
+        width: 448
+        height: 206
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -233,10 +233,10 @@ TextureImporter:
       name: forpro_gamjam_re_6
       rect:
         serializedVersion: 2
-        x: 1774
-        y: 2172
-        width: 232
-        height: 144
+        x: 547
+        y: 1976
+        width: 460
+        height: 194
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -254,10 +254,10 @@ TextureImporter:
       name: forpro_gamjam_re_7
       rect:
         serializedVersion: 2
-        x: 547
-        y: 1976
-        width: 460
-        height: 194
+        x: 1015
+        y: 1989
+        width: 449
+        height: 191
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -737,8 +737,8 @@ TextureImporter:
       name: forpro_gamjam_re_30
       rect:
         serializedVersion: 2
-        x: 1580
-        y: 319
+        x: 1658
+        y: 233
         width: 375
         height: 343
       alignment: 0
