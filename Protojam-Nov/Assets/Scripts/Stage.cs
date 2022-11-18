@@ -30,7 +30,7 @@ public class Stage : Singleton<Stage>
         set
         {
             _timer = Mathf.Clamp(value, TimerMin, TimerMax);
-            // Todo : UI에 표시
+            InGameCanvas.Instance.TimerFillAmount = (TimerMax - _timer) / TimerMax;
             if (_timer >= TimerMax)
             {
                 GameManager.Instance.GameClear();
@@ -55,7 +55,7 @@ public class Stage : Singleton<Stage>
             OnSubmitFail = OnSubmitFail,
         };
 
-        // Todo : UI에 표시
+        InGameCanvas.Instance.CookingView.ShowOrderInformation(CurrentOrder);
     }
 
     public void SubmitOrder(MaterialType[] recipe)
@@ -70,7 +70,7 @@ public class Stage : Singleton<Stage>
 
     private void OnSubmitFail()
     {
-        // Todo : UI에 표시
+        InGameCanvas.Instance.CookingView.ShowSubmitResult(false, false, null);
     }
 
     private void OnOrderFail()
@@ -80,9 +80,7 @@ public class Stage : Singleton<Stage>
         _gameData.OrderCount++;
         _gameData.FailCount++;
 
-        // Todo : UI에 표시 (대충 X 하고 나가는 애니메이션)
-        // 잠시 쉬고
-        SetOrder();
+        InGameCanvas.Instance.CookingView.ShowSubmitResult(false, true, SetOrder);
     }
 
     private void OnOrderSuccess()
@@ -93,9 +91,7 @@ public class Stage : Singleton<Stage>
         _gameData.SuccessCount++;
         Timer += SuccessBonus;
 
-        // Todo : UI에 표시 (대충 O 하고 나가는 애니메이션)
-        // 잠시 쉬고
-        SetOrder();
+        InGameCanvas.Instance.CookingView.ShowSubmitResult(true, true, SetOrder);
     }
 
     #endregion
@@ -112,6 +108,7 @@ public class Stage : Singleton<Stage>
 
     public void StartStage()
     {
+        SetOrder();
     }
 
     public void EndStage()

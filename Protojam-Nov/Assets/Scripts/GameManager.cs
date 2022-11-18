@@ -3,8 +3,28 @@ using UnityEngine;
 
 public class GameData
 {
-    public int OrderCount;
-    public int SuccessCount;
+    private int _orderCount;
+    public int OrderCount
+    {
+        get => _orderCount;
+        set
+        {
+            _orderCount = value;
+            InGameCanvas.Instance.OrderCount = value;
+        }
+    }
+    
+    private int _successCount;
+    public int SuccessCount
+    {
+        get => _successCount;
+        set
+        {
+            _successCount = value;
+            InGameCanvas.Instance.SuccessCount = value;
+        }
+    }
+    
     public int FailCount;
 
     public GameData()

@@ -25,7 +25,7 @@ public enum MaterialType
 
 public class Order
 {
-    public ZombieType ZombieType;
+    public readonly ZombieType ZombieType;
     
     public readonly MaterialType[] Recipe;
     private const int RecipeCount = 3;
