@@ -15,12 +15,12 @@ public enum ZombieType
 
 public enum MaterialType
 {
-    Bread, // 빵
-    Lettuce, // 상추
-    Cheese, // 치즈
-    Patty, // 패티
-    Onions, // 양파
     Pickles, // 피클
+    Onions, // 양파
+    Bread, // 빵
+    Cheese, // 치즈
+    Lettuce, // 상추
+    Patty, // 패티
 }
 
 public class Order
@@ -29,7 +29,7 @@ public class Order
     
     public readonly MaterialType[] Recipe;
     private const int RecipeCount = 3;
-    private const int MaterialCount = 7;
+    public const int MaterialCount = 7;
 
     private float _time;
     private const float MaxTime = 12f;
@@ -54,12 +54,18 @@ public class Order
 
     public void SubmitOrder(MaterialType[] recipe)
     {
+        if (recipe.Length != RecipeCount)
+        {
+            OnSubmitFail?.Invoke();
+            return;
+        }
+        
         for (int i = 0; i < MaterialCount; i++)
         {
-            if (Recipe[i] != recipe[i])
-            {
-                OnSubmitFail?.Invoke();
-            }
+            if (Recipe[i] == recipe[i]) continue;
+            
+            OnSubmitFail?.Invoke();
+            return;
         }
 
         OnOrderSuccess?.Invoke();

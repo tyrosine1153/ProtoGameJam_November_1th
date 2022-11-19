@@ -9,15 +9,16 @@ using UnityEngine.UI;
 public class CookingView : MonoBehaviour
 {
     [Header("Resources")]
-    [SerializeField] private Sprite[] zombieSprites;
-    [SerializeField] private Sprite[] materialSprites;
+    public Sprite[] zombieSprites;
+    public Sprite[] materialSprites;
 
     #region Order
 
     [Header("Order")] 
     [SerializeField] private Image zombieImage;
-    [SerializeField] private GameObject orderRecipeImagesContainer;
-    [SerializeField] private Image[] orderRecipeImages;
+    [SerializeField] private GameObject orderPanel;
+    [SerializeField] private CombinedMaterialView orderMaterialView;
+    [SerializeField] private CombinedMaterialView submittedMaterialView;
     
     [SerializeField] private GameObject orderCorrect;
     [SerializeField] private GameObject orderWrong;
@@ -27,15 +28,14 @@ public class CookingView : MonoBehaviour
         zombieImage.sprite = zombieSprites[(int)order.ZombieType];
         zombieImage.color = Color.white;
 
-        orderRecipeImagesContainer.SetActive(true);
-        for (int i = 0; i < order.Recipe.Length; i++)
-        {
-            orderRecipeImages[i].sprite = materialSprites[(int)order.Recipe[i]];
-        }
+        orderPanel.SetActive(true);
+        orderMaterialView.Set(order.Recipe);
     }
     
     public void ShowSubmitResult(bool isCorrect, bool leave, Action onCompleted)
     {
+        submittedMaterialView.gameObject.SetActive(true);
+        submittedMaterialView.Set(_combinedMaterials.ToArray());
         StartCoroutine(CoShowSubmitResult(isCorrect, leave, onCompleted));
     }
 
@@ -48,14 +48,16 @@ public class CookingView : MonoBehaviour
 
         orderCorrect.SetActive(false);
         orderWrong.SetActive(false);
+        submittedMaterialView.gameObject.SetActive(false);
 
         if (leave)
         {
             zombieImage.color = Color.clear;
-            orderRecipeImagesContainer.SetActive(false);
+            orderPanel.SetActive(false);
         }
 
         yield return new WaitForSeconds(0.5f);
+        ClearCombined();
         onCompleted?.Invoke();
     }
 
@@ -64,26 +66,22 @@ public class CookingView : MonoBehaviour
     #region Combination
 
     [Header("Combination")]
-    [SerializeField] private Image[] combinedMaterialImages;
+    [SerializeField] private CombinedMaterialView combinedMaterialView;
 
     private readonly List<MaterialType> _combinedMaterials = new();
 
     private void ClearCombined()
     {
         _combinedMaterials.Clear();
-        foreach (var image in combinedMaterialImages)
-        {
-            image.color = Color.clear;
-        }
+        combinedMaterialView.Set(_combinedMaterials.ToArray());
     }
 
     private void AddCombined(MaterialType materialType)
     {
-        if (_combinedMaterials.Count >= combinedMaterialImages.Length) return;
+        if (_combinedMaterials.Count >= Order.MaterialCount) return;
 
         _combinedMaterials.Add(materialType);
-        combinedMaterialImages[_combinedMaterials.Count - 1].sprite = materialSprites[(int)materialType];
-        combinedMaterialImages[_combinedMaterials.Count - 1].color = Color.white;
+        combinedMaterialView.Set(_combinedMaterials.ToArray());
     }
 
     #endregion
@@ -93,10 +91,9 @@ public class CookingView : MonoBehaviour
     [Header("Dragable")] 
     [SerializeField] private Transform[] materialSlotsTransform;
     [SerializeField] private Image[] materialSlotsImages;
-    [SerializeField] private Transform combined;
 
     [Header("Drag Targets")]
-    [SerializeField] private RectTransform dishTransform;
+    [SerializeField] private RectTransform submitTransform;
     [SerializeField] private RectTransform combineBarTransform;
     [SerializeField] private RectTransform trashTransform;
 
@@ -142,6 +139,7 @@ public class CookingView : MonoBehaviour
 
     private void InitCombinedDrag()
     {
+        var combined = combinedMaterialView.transform;
         var startPosition = Vector2.zero;
         var targetBegin = Vector2.zero;
         var dragBegin = Vector2.zero;
@@ -161,7 +159,7 @@ public class CookingView : MonoBehaviour
         }).AddTo(gameObject);
         headerEventTrigger.OnPointerUpAsObservable().Subscribe(eventData =>
         {
-            if (RectTransformUtility.RectangleContainsScreenPoint(dishTransform, eventData.position))
+            if (RectTransformUtility.RectangleContainsScreenPoint(submitTransform, eventData.position))
             {
                 Stage.Instance.SubmitOrder(_combinedMaterials.ToArray());
                 ClearCombined();
