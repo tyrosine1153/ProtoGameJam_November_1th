@@ -5,8 +5,15 @@ using UnityEngine.SceneManagement;
 
 public class ButtonManage_main : MonoBehaviour
 {
+    AudioManager Amanager;
     private void Start()
     {
+        if (GameObject.Find("AudioManager") != null)
+        {
+            Amanager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+            Amanager.PlayBGM(0);
+        }
+
     }
     public void StartGame()
     {
