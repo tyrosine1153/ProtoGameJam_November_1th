@@ -5,9 +5,16 @@ using UnityEngine.SceneManagement;
 
 public class ButtonManage_main : MonoBehaviour
 {
-    public void startGame()
+    private void Start()
+    {
+    }
+    public void StartGame()
     {
         SceneManager.LoadScene("Ingame");
+    }
+    public void ToMain()
+    {
+        SceneManager.LoadScene("Main");
     }
     public void exitGame()
     {

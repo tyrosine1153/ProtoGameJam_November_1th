@@ -2021,7 +2021,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8697f40cd29242479c789ef89cf16efd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dontDestroyOnLoad: 0
+  dontDestroyOnLoad: 1
 --- !u!1 &985070025
 GameObject:
   m_ObjectHideFlags: 0
