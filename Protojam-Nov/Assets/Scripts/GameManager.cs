@@ -38,17 +38,7 @@ public class GameData
 public class GameManager : Singleton<GameManager>
 {
     public GameData CurrentGameData;
-    public bool isGamePlaying = false;
-
-    public void GameOver()
-    {
-        GameEnd(false);
-    }
-
-    public void GameClear()
-    {
-        GameEnd(true);
-    }
+    public bool IsGamePlaying { get; private set; }
 
     [ContextMenu("GameStart")]
     public void TestGameStart()
@@ -58,8 +48,8 @@ public class GameManager : Singleton<GameManager>
 
     public void GameStart()
     {
-        if (isGamePlaying) return;
-        isGamePlaying = true;
+        if (IsGamePlaying) return;
+        IsGamePlaying = true;
 
         CurrentGameData = new GameData();
 
@@ -77,7 +67,7 @@ public class GameManager : Singleton<GameManager>
 
         Stage.Instance.SetStage(CurrentGameData);
 
-        yield return new WaitForSeconds(0f);
+        yield return new WaitForSeconds(0.5f);
 
         // Todo : 대충 지연과 연출
 
@@ -86,24 +76,24 @@ public class GameManager : Singleton<GameManager>
         yield break;
     }
 
-    public void GameEnd(bool isGameClear)
+    public void GameEnd()
     {
-        if (!isGamePlaying) return;
-        isGamePlaying = false;
+        if (!IsGamePlaying) return;
+        IsGamePlaying = false;
 
         // Todo : 연출
 
-        StartCoroutine(CoGameEnd(isGameClear));
+        StartCoroutine(CoGameEnd());
     }
 
-    private IEnumerator CoGameEnd(bool isGameClear)
+    private IEnumerator CoGameEnd()
     {
         Stage.Instance.EndStage();
 
         // Todo : 대충 지연과 연출
 
+        yield return new WaitForSeconds(5f);
         // Todo : CurrentGameData 게임 결과 창에 전달하기
-
-        yield break;
+        SceneManagerEx.LoadScene(SceneType.Result);
     }
 }

@@ -1,67 +1,61 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class TutorialPopup : MonoBehaviour
 {
-    GameObject tutorialPopup;
-    GameObject optionButton;
-    GameObject leftButton;
-    GameObject rightButton;
-    GameObject[] page = new GameObject[3];
-    int pageNum = 0;
+    [SerializeField] private GameObject[] pages;
+    [SerializeField] private Button leftButton;
+    [SerializeField] private Button rightButton;
+    [SerializeField] private Button startButton;
+    [SerializeField] private Button closeButton;
+
+    private int _currentPageIndex = -1;
+
     private void Awake()
     {
-        tutorialPopup = GameObject.Find("Tutorial_PopupImage");
-        optionButton = GameObject.Find("Button_Option");
-        leftButton = GameObject.Find("Left_Button");
-        rightButton = GameObject.Find("Right_Button");
-        for (int i = 0; i<3; i++)
-        {
-            page[i] = GameObject.Find("Page" + (i + 1));
-            page[i].SetActive(false);
-        }
+        leftButton.onClick.AddListener(() => { SetPage(_currentPageIndex - 1); });
+        rightButton.onClick.AddListener(() => { SetPage(_currentPageIndex + 1); });
     }
-    // Start is called before the first frame update
-    void Start()
-    {
-        optionButton.SetActive(false);
-        page[0].SetActive(true);
-        CheckPageHiddenButton();
-    }
-    public void popup_off()
-    {
-        tutorialPopup.SetActive(false);
-        optionButton.SetActive(true);
-    }
-    public void page_left()
-    {
-        if(pageNum-1 > -1)
-        {
-            page[pageNum].SetActive(false);
-            page[--pageNum].SetActive(true);
-        }
-        CheckPageHiddenButton();
-    }
-    public void page_right()
-    {
-        if (pageNum + 1 < 3)
-        {
-            page[pageNum].SetActive(false);
-            page[++pageNum].SetActive(true);
-        }
-        CheckPageHiddenButton();
-    }
-    void CheckPageHiddenButton()
-    {
-        if (pageNum == 0) leftButton.SetActive(false);
-        else if (pageNum == 1)
-        {
-            if (leftButton.activeSelf == false) leftButton.SetActive(true);
-            if (rightButton.activeSelf == false) rightButton.SetActive(true);
-        }
-        else if (pageNum == 2) rightButton.SetActive(false);
 
+    public void Show(Action onClickStart = null)
+    {
+        startButton.onClick.RemoveAllListeners();
+        closeButton.onClick.RemoveAllListeners();
+
+        startButton.onClick.AddListener(() =>
+        {
+            onClickStart?.Invoke();
+            Close();
+        });
+        closeButton.onClick.AddListener(() =>
+        {
+            onClickStart?.Invoke();
+            Close();
+        });
+
+        gameObject.SetActive(true);
+        SetPage(0);
+    }
+
+    private void SetPage(int index)
+    {
+        if (index < 0 || index >= pages.Length || index == _currentPageIndex)
+        {
+            return;
+        }
+        _currentPageIndex = index;
+
+        for (int i = 0; i < pages.Length; i++)
+        {
+            pages[i].SetActive(i == _currentPageIndex);
+        }
+        leftButton.gameObject.SetActive(_currentPageIndex > 0);
+        rightButton.gameObject.SetActive(_currentPageIndex < pages.Length - 1);
+    }
+
+    public void Close()
+    {
+        gameObject.SetActive(false);
     }
 }

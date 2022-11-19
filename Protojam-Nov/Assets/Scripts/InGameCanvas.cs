@@ -13,6 +13,10 @@ public class InGameCanvas : Singleton<InGameCanvas>
     [Header("CookingView")]
     [SerializeField] private CookingView cookingView;
     public CookingView CookingView => cookingView;
+    
+    [Header("Other")]
+    [SerializeField] private TutorialPopup tutorialPopup;
+    public TutorialPopup TutorialPopup => tutorialPopup;
 
     public int SuccessCount
     {

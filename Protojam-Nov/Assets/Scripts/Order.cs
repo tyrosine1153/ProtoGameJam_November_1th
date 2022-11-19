@@ -54,7 +54,7 @@ public class Order
 
     public void SubmitOrder(MaterialType[] recipe)
     {
-        if (recipe.Length != RecipeCount)
+        if (recipe.Length != MaterialCount)
         {
             OnSubmitFail?.Invoke();
             return;

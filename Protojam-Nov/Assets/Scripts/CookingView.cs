@@ -79,6 +79,7 @@ public class CookingView : MonoBehaviour
     private void AddCombined(MaterialType materialType)
     {
         if (_combinedMaterials.Count >= Order.MaterialCount) return;
+        if (!GameManager.Instance.IsGamePlaying) return;
 
         _combinedMaterials.Add(materialType);
         combinedMaterialView.Set(_combinedMaterials.ToArray());
@@ -96,6 +97,8 @@ public class CookingView : MonoBehaviour
     [SerializeField] private RectTransform submitTransform;
     [SerializeField] private RectTransform combineBarTransform;
     [SerializeField] private RectTransform trashTransform;
+    
+    private readonly List<IDisposable> _playingDisposable = new List<IDisposable>();
 
     private void InitMaterialSlotsDrag()
     {
@@ -118,12 +121,12 @@ public class CookingView : MonoBehaviour
                 dragBegin = eventData.position;
 
                 materialSlotImage.color = Color.white;
-            }).AddTo(gameObject);
+            }).AddTo(_playingDisposable);
             headerEventTrigger.OnDragAsObservable().Subscribe(eventData =>
             {
                 moveDelta = eventData.position - dragBegin;
                 materialSlot.position = targetBegin + moveDelta;
-            }).AddTo(gameObject);
+            }).AddTo(_playingDisposable);
             headerEventTrigger.OnPointerUpAsObservable().Subscribe(eventData =>
             {
                 if (RectTransformUtility.RectangleContainsScreenPoint(combineBarTransform, eventData.position))
@@ -133,7 +136,7 @@ public class CookingView : MonoBehaviour
 
                 materialSlotImage.color = Color.clear;
                 materialSlot.position = startPosition;
-            }).AddTo(gameObject);
+            }).AddTo(_playingDisposable);
         }
     }
 
@@ -151,12 +154,12 @@ public class CookingView : MonoBehaviour
             startPosition = combined.position;
             targetBegin = startPosition;
             dragBegin = eventData.position;
-        }).AddTo(gameObject);
+        }).AddTo(_playingDisposable);
         headerEventTrigger.OnDragAsObservable().Subscribe(eventData =>
         {
             moveDelta = eventData.position - dragBegin;
             combined.position = targetBegin + moveDelta;
-        }).AddTo(gameObject);
+        }).AddTo(_playingDisposable);
         headerEventTrigger.OnPointerUpAsObservable().Subscribe(eventData =>
         {
             if (RectTransformUtility.RectangleContainsScreenPoint(submitTransform, eventData.position))
@@ -169,7 +172,7 @@ public class CookingView : MonoBehaviour
                 ClearCombined();
             }
             combined.position = startPosition;
-        }).AddTo(gameObject);
+        }).AddTo(_playingDisposable);
     }
     
     #endregion
@@ -178,5 +181,16 @@ public class CookingView : MonoBehaviour
     {
         InitMaterialSlotsDrag();
         InitCombinedDrag();
+    }
+
+    public void OnEndGame()
+    {
+        while (_playingDisposable.Count > 0)
+        {
+            _playingDisposable[0].Dispose();
+            _playingDisposable.RemoveAt(0);
+        }
+
+        ClearCombined();
     }
 }

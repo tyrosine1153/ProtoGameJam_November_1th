@@ -3,13 +3,18 @@ using UnityEngine;
 // 인게임에서만 하는 모든 시스템 (인게임 전용 GameManager)
 public class Stage : Singleton<Stage>
 {
+    private void Start()
+    {
+        InGameCanvas.Instance.TutorialPopup.Show(GameManager.Instance.GameStart);
+    }
+
     private void Update()
     {
-        if (!GameManager.Instance.isGamePlaying) return;
+        if (!GameManager.Instance.IsGamePlaying) return;
 
-        if (Timer < TimerMax)
+        if (Timer > TimerMin)
         {
-            Timer += Time.deltaTime;
+            Timer -= Time.deltaTime;
         }
 
         if (CurrentOrder != null)
@@ -30,10 +35,10 @@ public class Stage : Singleton<Stage>
         set
         {
             _timer = Mathf.Clamp(value, TimerMin, TimerMax);
-            InGameCanvas.Instance.TimerFillAmount = (TimerMax - _timer) / TimerMax;
-            if (_timer >= TimerMax)
+            InGameCanvas.Instance.TimerFillAmount = _timer / TimerMax;
+            if (_timer <= TimerMin)
             {
-                GameManager.Instance.GameClear();
+                GameManager.Instance.GameEnd();
             }
         }
     }
@@ -64,7 +69,7 @@ public class Stage : Singleton<Stage>
         {
             return;
         }
-
+        
         CurrentOrder.SubmitOrder(recipe);
     }
 
@@ -103,7 +108,7 @@ public class Stage : Singleton<Stage>
     public void SetStage(GameData gameData)
     {
         _gameData = gameData;
-        Timer = TimerMin;
+        Timer = TimerMax;
     }
 
     public void StartStage()
@@ -113,6 +118,7 @@ public class Stage : Singleton<Stage>
 
     public void EndStage()
     {
+        InGameCanvas.Instance.CookingView.OnEndGame();
     }
 
     #endregion
