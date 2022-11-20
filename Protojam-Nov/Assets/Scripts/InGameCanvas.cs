@@ -20,6 +20,7 @@ public class InGameCanvas : Singleton<InGameCanvas>
     public TutorialPopup TutorialPopup => tutorialPopup;
     
     [SerializeField] private OptionPopup optionPopup;
+    [SerializeField] private Button exitButton;
 
     public int SuccessCount
     {
@@ -44,6 +45,7 @@ public class InGameCanvas : Singleton<InGameCanvas>
     protected override void Awake()
     {
         base.Awake();
-        optionButton.onClick.AddListener((() => optionPopup.Show()));
+        optionButton.onClick.AddListener(() => optionPopup.Show());
+        exitButton.onClick.AddListener(() => GameManager.Instance.GameEnd(true));
     }
 }

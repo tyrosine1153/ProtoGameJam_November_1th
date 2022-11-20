@@ -61,6 +61,7 @@ public class Stage : Singleton<Stage>
             OnOrderFail = OnOrderFail,
             OnSubmitFail = OnSubmitFail,
         };
+        _gameData.OrderCount++;
 
         InGameCanvas.Instance.CookingView.ShowOrderInformation(CurrentOrder);
     }
@@ -84,7 +85,6 @@ public class Stage : Singleton<Stage>
     {
         CurrentOrder = null;
 
-        _gameData.OrderCount++;
         _gameData.FailCount++;
 
         InGameCanvas.Instance.CookingView.ShowSubmitResult(false, true, SetOrder);
@@ -94,7 +94,6 @@ public class Stage : Singleton<Stage>
     {
         CurrentOrder = null;
 
-        _gameData.OrderCount++;
         _gameData.SuccessCount++;
         Timer += SuccessBonus;
 

@@ -41,22 +41,25 @@ public class CookingView : MonoBehaviour
 
     private IEnumerator CoShowSubmitResult(bool isCorrect, bool leave, Action onCompleted)
     {
+        Stage.Instance.isTimerPlaying = false;
         orderCorrect.SetActive(isCorrect);
         orderWrong.SetActive(!isCorrect);
+        orderPanel.SetActive(false);
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
 
         orderCorrect.SetActive(false);
         orderWrong.SetActive(false);
         submittedMaterialView.gameObject.SetActive(false);
 
+        orderPanel.SetActive(!leave);
         if (leave)
         {
             zombieImage.color = Color.clear;
-            orderPanel.SetActive(false);
         }
 
         yield return new WaitForSeconds(0.5f);
+        Stage.Instance.isTimerPlaying = true;
         ClearCombined();
         onCompleted?.Invoke();
     }

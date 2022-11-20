@@ -57,7 +57,7 @@ public class GameManager : Singleton<GameManager>
 
         StartCoroutine(CoGameStart());
     }
-
+    
     private IEnumerator CoGameStart()
     {
         while (!Stage.IsInitialized)
@@ -76,17 +76,18 @@ public class GameManager : Singleton<GameManager>
         yield break;
     }
 
-    public void GameEnd()
+    public void GameEnd(bool isExit = false)
     {
         if (!IsGamePlaying) return;
         IsGamePlaying = false;
 
+        CurrentGameData = new GameData();
         // Todo : 연출
 
-        StartCoroutine(CoGameEnd());
+        StartCoroutine(CoGameEnd(isExit));
     }
 
-    private IEnumerator CoGameEnd()
+    private IEnumerator CoGameEnd(bool isExit)
     {
         Stage.Instance.EndStage();
 
@@ -94,6 +95,13 @@ public class GameManager : Singleton<GameManager>
 
         yield return new WaitForSeconds(5f);
         // Todo : CurrentGameData 게임 결과 창에 전달하기
-        SceneManagerEx.LoadScene(SceneType.Result);
+        if (isExit)
+        {
+            SceneManagerEx.LoadScene(SceneType.Main);
+        }
+        else
+        {
+            SceneManagerEx.LoadScene(SceneType.Result);
+        }
     }
 }
