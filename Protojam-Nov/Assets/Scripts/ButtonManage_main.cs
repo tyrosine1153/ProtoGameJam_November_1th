@@ -1,27 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class ButtonManage_main : MonoBehaviour
 {
-    AudioManager Amanager;
+    AudioManager amanager;
+    FaderUI faderUI;
     private void Start()
     {
-        if (GameObject.Find("AudioManager") != null)
-        {
-            Amanager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
-            Amanager.PlayBGM(0);
-        }
-
+        amanager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+        faderUI = GameObject.Find("Fade").GetComponent<FaderUI>();
     }
     public void StartGame()
     {
-        SceneManager.LoadScene("Ingame");
+        faderUI.startFade(FaderUI.Fade.In, "InGame");
+
     }
     public void ToMain()
     {
-        SceneManager.LoadScene("Main");
+        amanager.StopBGM();
+        faderUI.startFade(FaderUI.Fade.In, "Main");
     }
     public void exitGame()
     {

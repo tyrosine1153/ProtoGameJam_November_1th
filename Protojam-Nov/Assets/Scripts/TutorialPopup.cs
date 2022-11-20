@@ -9,11 +9,15 @@ public class TutorialPopup : MonoBehaviour
     [SerializeField] private Button rightButton;
     [SerializeField] private Button startButton;
     [SerializeField] private Button closeButton;
+    AudioManager Amanager;
+    bool audiomissing;
 
     private int _currentPageIndex = -1;
 
     private void Awake()
     {
+        Amanager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+        if (Amanager == null) audiomissing = true;
         leftButton.onClick.AddListener(() => { SetPage(_currentPageIndex - 1); });
         rightButton.onClick.AddListener(() => { SetPage(_currentPageIndex + 1); });
     }
@@ -40,6 +44,7 @@ public class TutorialPopup : MonoBehaviour
 
     private void SetPage(int index)
     {
+        if (!audiomissing) Amanager.PlaySFX(0);
         if (index < 0 || index >= pages.Length || index == _currentPageIndex)
         {
             return;
@@ -56,6 +61,7 @@ public class TutorialPopup : MonoBehaviour
 
     public void Close()
     {
+        if(!audiomissing) Amanager.PlayBGM(0);
         gameObject.SetActive(false);
     }
 }

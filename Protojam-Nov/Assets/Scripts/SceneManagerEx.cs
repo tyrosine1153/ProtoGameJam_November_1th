@@ -16,6 +16,5 @@ public class SceneManagerEx : Singleton<SceneManagerEx>
     {
         SceneManager.LoadScene((int) type);
     }
-
     // Extend SceneManager
 }

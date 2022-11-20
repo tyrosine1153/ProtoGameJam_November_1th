@@ -44,6 +44,8 @@ public class OptionPopup : MonoBehaviour
     public void popup_on()
     {
         optionPopup.SetActive(true);
+        BGMslider.value = Amanager.BGMVolume;
+        SFXslider.value = Amanager.SFXVolume;
         optionButton.SetActive(false);
 
         if (menuButton != null) menuButton.SetActive(false);
