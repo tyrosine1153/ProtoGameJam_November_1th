@@ -10,13 +10,15 @@ public class OptionPopup : MonoBehaviour
     GameObject optionButton;
     GameObject menuButton = null;
     AudioManager Amanager;
+    bool audiomissing;
     public Slider BGMslider;
     public Slider SFXslider;
     private void Awake()
     {
         optionPopup = GameObject.Find("OptionPopupImage");
         optionButton = GameObject.Find("Button_Option");
-        Amanager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+        if (GameObject.Find("AudioManager") != null) Amanager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+        else audiomissing = true;
         if (SceneManager.GetActiveScene().name == "Main") menuButton = GameObject.Find("MenuButton");
     }
     // Start is called before the first frame update
@@ -44,8 +46,11 @@ public class OptionPopup : MonoBehaviour
     public void popup_on()
     {
         optionPopup.SetActive(true);
-        BGMslider.value = Amanager.BGMVolume;
-        SFXslider.value = Amanager.SFXVolume;
+        if (!audiomissing)
+        {
+            BGMslider.value = Amanager.BGMVolume;
+            SFXslider.value = Amanager.SFXVolume;
+        }
         optionButton.SetActive(false);
 
         if (menuButton != null) menuButton.SetActive(false);

@@ -16,8 +16,9 @@ public class TutorialPopup : MonoBehaviour
 
     private void Awake()
     {
-        Amanager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
-        if (Amanager == null) audiomissing = true;
+        if(GameObject.Find("AudioManager")!=null) Amanager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+        else audiomissing = true;
+
         leftButton.onClick.AddListener(() => { SetPage(_currentPageIndex - 1); });
         rightButton.onClick.AddListener(() => { SetPage(_currentPageIndex + 1); });
     }
@@ -45,6 +46,7 @@ public class TutorialPopup : MonoBehaviour
     private void SetPage(int index)
     {
         if (!audiomissing) Amanager.PlaySFX(0);
+
         if (index < 0 || index >= pages.Length || index == _currentPageIndex)
         {
             return;

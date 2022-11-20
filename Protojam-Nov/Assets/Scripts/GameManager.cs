@@ -24,7 +24,7 @@ public class GameData
             InGameCanvas.Instance.SuccessCount = value;
         }
     }
-    
+
     public int FailCount;
 
     public GameData()
