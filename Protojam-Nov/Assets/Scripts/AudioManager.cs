@@ -3,11 +3,13 @@ using UnityEngine;
 public enum BGMType
 {
     None = -1,
+    InGame,
 }
 
 public enum SFXType
 {
     None = -1,
+    Page,
 }
 
 public class AudioManager : Singleton<AudioManager>

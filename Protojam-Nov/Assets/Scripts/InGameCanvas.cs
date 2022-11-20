@@ -13,23 +13,37 @@ public class InGameCanvas : Singleton<InGameCanvas>
     [Header("CookingView")]
     [SerializeField] private CookingView cookingView;
     public CookingView CookingView => cookingView;
+    [SerializeField] private Image orderTimerFillImage;
     
     [Header("Other")]
     [SerializeField] private TutorialPopup tutorialPopup;
     public TutorialPopup TutorialPopup => tutorialPopup;
+    
+    [SerializeField] private OptionPopup optionPopup;
 
     public int SuccessCount
     {
-        set => successCountText.text = value.ToString();
+        set => successCountText.text = value.ToString("D3");
     }
 
     public int OrderCount
     {
-        set => orderCountText.text = value.ToString();
+        set => orderCountText.text = value.ToString("D3");
     }
 
     public float TimerFillAmount
     {
         set => timerFillImage.fillAmount = value;
+    }
+    
+    public float OrderTimerFillAmount
+    {
+        set => orderTimerFillImage.fillAmount = value;
+    }
+
+    protected override void Awake()
+    {
+        base.Awake();
+        optionButton.onClick.AddListener((() => optionPopup.Show()));
     }
 }

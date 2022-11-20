@@ -1,15 +1,12 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class FaderUI : MonoBehaviour
 {
-
 	#region FIELDS
 	public Image fadeOutUIImage;
-	//public AudioSource audiosource;
 	public float fadeSpeed = 0.8f;
 
 	public enum Fade
@@ -53,19 +50,15 @@ public class FaderUI : MonoBehaviour
 	#endregion
 
 	#region HELPERS
-	public void startFade(Fade direction, string sceneToLoad)
+	public void StartFade(Fade direction, Action callback = null)
     {
-		StartCoroutine(FadeAndLoadScene(direction, sceneToLoad));
+		StartCoroutine(FadeAndLoadScene(direction, callback));
 	}
-	
-	public IEnumerator FadeAndLoadScene(Fade fade, string sceneToLoad)
+
+	private IEnumerator FadeAndLoadScene(Fade fade, Action callback = null)
 	{
 		yield return Fading(fade);
-		SceneManager.LoadScene(sceneToLoad);
-	}
-	public IEnumerator FadeAndLoadScene(Fade fade)
-    {
-		yield return Fading(fade);
+		callback?.Invoke();
 	}
 
 	private void SetColorImage(ref float alpha, Fade fadeDirection)

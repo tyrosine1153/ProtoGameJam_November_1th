@@ -3,6 +3,8 @@ using UnityEngine;
 // 인게임에서만 하는 모든 시스템 (인게임 전용 GameManager)
 public class Stage : Singleton<Stage>
 {
+    public bool isTimerPlaying;
+
     private void Start()
     {
         InGameCanvas.Instance.TutorialPopup.Show(GameManager.Instance.GameStart);
@@ -10,7 +12,7 @@ public class Stage : Singleton<Stage>
 
     private void Update()
     {
-        if (!GameManager.Instance.IsGamePlaying) return;
+        if (!isTimerPlaying) return;
 
         if (Timer > TimerMin)
         {
@@ -114,10 +116,12 @@ public class Stage : Singleton<Stage>
     public void StartStage()
     {
         SetOrder();
+        isTimerPlaying = true;
     }
 
     public void EndStage()
     {
+        isTimerPlaying = false;
         InGameCanvas.Instance.CookingView.OnEndGame();
     }
 

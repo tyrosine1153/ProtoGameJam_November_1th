@@ -1154,7 +1154,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1935313689}
         m_TargetAssemblyTypeName: OptionPopup, Assembly-CSharp
-        m_MethodName: popup_on
+        m_MethodName: Show
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1705,7 +1705,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1935313689}
         m_TargetAssemblyTypeName: OptionPopup, Assembly-CSharp
-        m_MethodName: popup_off
+        m_MethodName: Close
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -1,60 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class OptionPopup : MonoBehaviour
 {
-    GameObject optionPopup;
-    GameObject optionButton;
-    GameObject menuButton = null;
-    AudioManager Amanager;
-    public Slider BGMslider;
-    public Slider SFXslider;
-    private void Awake()
-    {
-        optionPopup = GameObject.Find("OptionPopupImage");
-        optionButton = GameObject.Find("Button_Option");
-        Amanager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
-        if (SceneManager.GetActiveScene().name == "Main") menuButton = GameObject.Find("MenuButton");
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-        optionPopup.SetActive(false);
-    }
+    [SerializeField] private Slider bgmSlider;
+    [SerializeField] private Slider sfxSlider;
+    [SerializeField] private Button closeButton;
+
     private void OnEnable()
     {
-        BGMslider.onValueChanged.AddListener(delegate { BGMChangeCheck(); });
-        SFXslider.onValueChanged.AddListener(delegate { SFXChangeCheck(); });
-    }
-    private void OnDisable()
-    {
-    }
-    void BGMChangeCheck()
-    {
-        Amanager.BGMVolume = BGMslider.value;
-    }
-    void SFXChangeCheck()
-    {
-        Amanager.SFXVolume = SFXslider.value;
+        bgmSlider.onValueChanged.AddListener(value => AudioManager.Instance.BGMVolume = value);
+        sfxSlider.onValueChanged.AddListener(value => AudioManager.Instance.SFXVolume = value);
+        closeButton.onClick.AddListener(Close);
     }
 
-    public void popup_on()
+    public void Show()
     {
-        optionPopup.SetActive(true);
-        BGMslider.value = Amanager.BGMVolume;
-        SFXslider.value = Amanager.SFXVolume;
-        optionButton.SetActive(false);
-
-        if (menuButton != null) menuButton.SetActive(false);
+        gameObject.SetActive(true);
     }
-    public void popup_off()
-    {
-        optionPopup.SetActive(false);
-        optionButton.SetActive(true);
 
-        if (menuButton != null) menuButton.SetActive(true);
+    public void Close()
+    {
+        gameObject.SetActive(false);
     }
 }
