@@ -21,6 +21,8 @@ public class InGameCanvas : Singleton<InGameCanvas>
     
     [SerializeField] private OptionPopup optionPopup;
     [SerializeField] private Button exitButton;
+    [SerializeField] private FaderUI faderUI;
+    public FaderUI FaderUI => faderUI;
 
     public int SuccessCount
     {

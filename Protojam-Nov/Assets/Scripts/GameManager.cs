@@ -81,7 +81,10 @@ public class GameManager : Singleton<GameManager>
         if (!IsGamePlaying) return;
         IsGamePlaying = false;
 
-        CurrentGameData = new GameData();
+        if (isExit)
+        {
+            CurrentGameData = new GameData();
+        }
         // Todo : 연출
 
         StartCoroutine(CoGameEnd(isExit));

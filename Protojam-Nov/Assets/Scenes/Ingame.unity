@@ -293,7 +293,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &44703795
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1137,6 +1137,7 @@ MonoBehaviour:
   tutorialPopup: {fileID: 1285254820}
   optionPopup: {fileID: 2007098297965358881}
   exitButton: {fileID: 1424397162}
+  faderUI: {fileID: 44703796}
 --- !u!1 &503497829
 GameObject:
   m_ObjectHideFlags: 0
@@ -2746,7 +2747,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -3.5}
+  m_AnchoredPosition: {x: 0.5, y: -3.5}
   m_SizeDelta: {x: 57, y: 55}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1255301658
@@ -2771,7 +2772,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 252126018, guid: 048eb2d0c620a69459adfeb81687a330, type: 3}
   m_Type: 3
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1

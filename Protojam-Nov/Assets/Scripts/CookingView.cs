@@ -51,6 +51,7 @@ public class CookingView : MonoBehaviour
         orderCorrect.SetActive(false);
         orderWrong.SetActive(false);
         submittedMaterialView.gameObject.SetActive(false);
+        submittedMaterialView.Set(Array.Empty<MaterialType>());
 
         orderPanel.SetActive(!leave);
         if (leave)

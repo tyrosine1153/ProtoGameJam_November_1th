@@ -17,10 +17,12 @@ public class OptionPopup : MonoBehaviour
     public void Show()
     {
         gameObject.SetActive(true);
+        if (Stage.IsInitialized) Stage.Instance.isTimerPlaying = false;
     }
 
     public void Close()
     {
         gameObject.SetActive(false);
+        if (Stage.IsInitialized) Stage.Instance.isTimerPlaying = true;
     }
 }

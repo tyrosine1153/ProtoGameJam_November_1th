@@ -28,7 +28,7 @@ public class Stage : Singleton<Stage>
     #region Stage Flow Data
 
     public const float TimerMin = 0;
-    public const float TimerMax = 40;
+    public const float TimerMax = 60;
     private float _timer;
 
     public float Timer
@@ -51,7 +51,7 @@ public class Stage : Singleton<Stage>
 
     public Order CurrentOrder { get; private set; }
 
-    private const float SuccessBonus = 4f;
+    private const float SuccessBonus = 6f;
 
     private void SetOrder()
     {
@@ -122,6 +122,7 @@ public class Stage : Singleton<Stage>
     {
         isTimerPlaying = false;
         InGameCanvas.Instance.CookingView.OnEndGame();
+        InGameCanvas.Instance.FaderUI.StartFade(FaderUI.Fade.In);
     }
 
     #endregion
