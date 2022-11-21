@@ -1,10 +1,11 @@
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
 public class MainCanvas : MonoBehaviour
 {
+    AudioManager Amanager;
     [SerializeField] private OptionPopup optionPopup;
-
     [SerializeField] private Button startButton;
     [SerializeField] private Button exitButton;
     [SerializeField] private Button optionButton;
@@ -12,9 +13,16 @@ public class MainCanvas : MonoBehaviour
 
     private void Start()
     {
+        Amanager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+        Amanager.PlayBGM(BGMType.InGame);
         startButton.onClick.AddListener(() =>
             faderUI.StartFade(FaderUI.Fade.In, () => SceneManagerEx.LoadScene(SceneType.InGame)));
         exitButton.onClick.AddListener(Application.Quit);
         optionButton.onClick.AddListener(optionPopup.Show);
+    }
+
+    private void OnDestroy()
+    {
+        Amanager.StopBGM();
     }
 }

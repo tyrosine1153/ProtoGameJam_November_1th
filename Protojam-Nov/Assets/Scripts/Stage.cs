@@ -3,10 +3,12 @@ using UnityEngine;
 // 인게임에서만 하는 모든 시스템 (인게임 전용 GameManager)
 public class Stage : Singleton<Stage>
 {
+    AudioManager Amanager;
     public bool isTimerPlaying;
 
     private void Start()
     {
+        Amanager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
         InGameCanvas.Instance.TutorialPopup.Show(GameManager.Instance.GameStart);
     }
 
@@ -83,6 +85,7 @@ public class Stage : Singleton<Stage>
 
     private void OnOrderFail()
     {
+        Amanager.PlaySFX(SFXType.fail);
         CurrentOrder = null;
 
         _gameData.FailCount++;
@@ -92,6 +95,7 @@ public class Stage : Singleton<Stage>
 
     private void OnOrderSuccess()
     {
+        Amanager.PlaySFX(SFXType.success);
         CurrentOrder = null;
 
         _gameData.SuccessCount++;
