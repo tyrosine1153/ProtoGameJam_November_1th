@@ -11,6 +11,7 @@ public class CookingView : MonoBehaviour
     [Header("Resources")]
     public Sprite[] zombieSprites;
     public Sprite[] materialSprites;
+    AudioManager Amanager;
 
     #region Order
 
@@ -82,6 +83,7 @@ public class CookingView : MonoBehaviour
 
     private void AddCombined(MaterialType materialType)
     {
+        Amanager.PlaySFX(SFXType.put);
         if (_combinedMaterials.Count >= Order.MaterialCount) return;
         if (!GameManager.Instance.IsGamePlaying) return;
 
@@ -173,6 +175,7 @@ public class CookingView : MonoBehaviour
             }
             else if (RectTransformUtility.RectangleContainsScreenPoint(trashTransform, eventData.position))
             {
+                Amanager.PlaySFX(SFXType.combine);
                 ClearCombined();
             }
             combined.position = startPosition;
@@ -183,6 +186,7 @@ public class CookingView : MonoBehaviour
     
     private void Awake()
     {
+        Amanager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
         InitMaterialSlotsDrag();
         InitCombinedDrag();
     }

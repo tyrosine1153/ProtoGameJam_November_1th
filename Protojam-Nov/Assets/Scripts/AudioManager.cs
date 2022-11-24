@@ -9,7 +9,7 @@ public enum BGMType
 public enum SFXType
 {
     None = -1,
-    Page,
+    Page, uiSelect, success, fail, zombie, select, combine, order, put
 }
 
 public class AudioManager : Singleton<AudioManager>

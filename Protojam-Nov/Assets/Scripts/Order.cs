@@ -34,6 +34,7 @@ public class Order
     private float _time;
     private const float MaxTime = 12f;
     private const float MinTime = 0f;
+    AudioManager Amanager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
     public float Time
     {
         get => _time;
@@ -55,6 +56,7 @@ public class Order
 
     public void SubmitOrder(MaterialType[] recipe)
     {
+        Amanager.PlaySFX(SFXType.zombie);
         if (recipe.Length != MaterialCount)
         {
             OnSubmitFail?.Invoke();
@@ -74,6 +76,7 @@ public class Order
 
     public Order()
     {
+        Amanager.PlaySFX(SFXType.order);
         var zombieType = (ZombieType)Random.Range(0, typeof(ZombieType).GetEnumValues().Length);
         
         ZombieType = zombieType;
