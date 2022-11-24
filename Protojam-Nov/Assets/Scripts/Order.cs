@@ -40,7 +40,6 @@ public class Order
         set
         {
             _time = Mathf.Clamp(value, MinTime, MaxTime);
-            // Todo : UI에 표시
             InGameCanvas.Instance.OrderTimerFillAmount = _time / MaxTime;
             if (_time <= MinTime)
             {

@@ -51,7 +51,7 @@ public class Stage : Singleton<Stage>
 
     public Order CurrentOrder { get; private set; }
 
-    private const float SuccessBonus = 6f;
+    private const float SuccessBonus = 4f;
 
     private void SetOrder()
     {
