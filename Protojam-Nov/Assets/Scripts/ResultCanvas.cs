@@ -13,20 +13,17 @@ public class ResultCanvas : MonoBehaviour
     [SerializeField] private TextMeshProUGUI orderCountText;
     [SerializeField] private TextMeshProUGUI successCountText;
     [SerializeField] private TextMeshProUGUI failCountText;
-
-    AudioManager Amanager;
+    
     private void Start()
     {
-        Amanager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
-
         restartButton.onClick.AddListener(() =>
         {
-            Amanager.StopBGM();
+            AudioManager.Instance.StopBGM();
             faderUI.StartFade(FaderUI.Fade.In, () => SceneManagerEx.LoadScene(SceneType.InGame));
         });
         mainButton.onClick.AddListener(() =>
         {
-            Amanager.StopBGM();
+            AudioManager.Instance.StopBGM();
             faderUI.StartFade(FaderUI.Fade.In, () => SceneManagerEx.LoadScene(SceneType.Main));
         });
 

@@ -4,7 +4,6 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 public class MainCanvas : MonoBehaviour
 {
-    AudioManager Amanager;
     [SerializeField] private OptionPopup optionPopup;
     [SerializeField] private Button startButton;
     [SerializeField] private Button exitButton;
@@ -13,8 +12,7 @@ public class MainCanvas : MonoBehaviour
 
     private void Start()
     {
-        Amanager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
-        Amanager.PlayBGM(BGMType.InGame);
+        AudioManager.Instance.PlayBGM(BGMType.InGame);
         startButton.onClick.AddListener(() =>
             faderUI.StartFade(FaderUI.Fade.In, () => SceneManagerEx.LoadScene(SceneType.InGame)));
         exitButton.onClick.AddListener(Application.Quit);
@@ -23,6 +21,6 @@ public class MainCanvas : MonoBehaviour
 
     private void OnDestroy()
     {
-        Amanager.StopBGM();
+        AudioManager.Instance.StopBGM();
     }
 }
