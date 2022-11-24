@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 // 인게임에서만 하는 모든 시스템 (인게임 전용 GameManager)
@@ -22,6 +23,18 @@ public class Stage : Singleton<Stage>
         if (CurrentOrder != null)
         {
             CurrentOrder.Time -= Time.deltaTime;
+        }
+    }
+
+    private IEnumerator BalanceTimer()
+    {
+        for (; Order.MaxTime < 5f; Order.MaxTime -= 1f)
+        {
+            Debug.Log("MaxTime : " + Order.MaxTime);
+            for (var time = 0f; time < 15; time += Time.deltaTime)
+            {
+                yield return null;
+            }
         }
     }
 
@@ -107,6 +120,7 @@ public class Stage : Singleton<Stage>
     #region Stage Flow
 
     private GameData _gameData;
+    private Coroutine _balanceTimerCoroutine;
 
     public void SetStage(GameData gameData)
     {
@@ -118,6 +132,7 @@ public class Stage : Singleton<Stage>
     {
         SetOrder();
         isTimerPlaying = true;
+        _balanceTimerCoroutine = StartCoroutine(BalanceTimer());
     }
 
     public void EndStage()
@@ -125,6 +140,7 @@ public class Stage : Singleton<Stage>
         isTimerPlaying = false;
         InGameCanvas.Instance.CookingView.OnEndGame();
         InGameCanvas.Instance.FaderUI.StartFade(FaderUI.Fade.In);
+        if(_balanceTimerCoroutine != null) StopCoroutine(_balanceTimerCoroutine);
     }
 
     #endregion

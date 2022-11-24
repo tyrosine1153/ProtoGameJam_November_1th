@@ -32,7 +32,7 @@ public class Order
     public const int MaterialCount = 7;
 
     private float _time;
-    private const float MaxTime = 12f;
+    public static float MaxTime = 12f;
     private const float MinTime = 0f;
     public float Time
     {
