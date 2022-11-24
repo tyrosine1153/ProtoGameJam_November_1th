@@ -27,11 +27,11 @@ public class Stage : Singleton<Stage>
 
     #region Stage Flow Data
 
-    public const float TimerMin = 0;
-    public const float TimerMax = 60;
+    private const float TimerMin = 0;
+    private const float TimerMax = 30;
     private float _timer;
 
-    public float Timer
+    private float Timer
     {
         get => _timer;
         set
